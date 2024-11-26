@@ -10,9 +10,10 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api/auth/login', { email, password });
+            const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
             localStorage.setItem('token', res.data.token);
             // Redirect to products page or handle successful login
+            console.log("login successful");
         } catch (error) {
             console.error('Login failed', error);
         }
