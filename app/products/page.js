@@ -1,5 +1,8 @@
+"use client"
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Navbar from '@/components/navbar';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -17,6 +20,7 @@ const Products = () => {
 
     return (
         <div>
+            <Navbar/>
             <h1>Products</h1>
             <ul>
                 {products.map(product => (

@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const router = useRouter()
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -23,8 +26,9 @@ const Signup = () => {
               .catch(error => {
                   console.log(error.response)
               });
-            // Redirect to login page or handle successful signup
-            // Example: window.location.href = '/login';
+              if (response.status === 201) { 
+                router.push('/login');
+            }
         } catch (error) {
             setError('Signup failed. Please try again.');
             console.error('Signup failed', error);

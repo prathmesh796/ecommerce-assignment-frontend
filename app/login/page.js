@@ -2,18 +2,22 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const router = useRouter();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
             localStorage.setItem('token', res.data.token);
-            // Redirect to products page or handle successful login
-            console.log("login successful");
+
+            router.push('/products');
+            
         } catch (error) {
             console.error('Login failed', error);
         }
