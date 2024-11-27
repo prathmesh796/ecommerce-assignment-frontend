@@ -1,34 +1,21 @@
 "use client"
 
 import React, { useState } from "react";
-import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
+import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
+import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Wireless Earbuds",
-      price: 99.99,
-      quantity: 2,
-      image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=100&h=100"
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      price: 199.99,
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=100&h=100"
-    }
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const router = useRouter(); 
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    router.push('/');
   };
 
   return (
@@ -69,6 +56,7 @@ const Navbar = () => {
                   )}
                 </button>
               </Link>
+              <Link href='/'><Button onClick={handleLogout}>Logout</Button></Link>
             </div>
           </div>
         </div>

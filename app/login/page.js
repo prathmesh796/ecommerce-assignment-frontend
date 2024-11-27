@@ -4,10 +4,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { useCart } from '@/context/CartContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { setUserId, setToken } = useCart();
 
     const router = useRouter();
 
@@ -15,6 +17,11 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            
+            setUserId(res.data.userId); 
+            setToken(res.data.token);
+
+            localStorage.setItem('userId', res.data.userId);
             localStorage.setItem('token', res.data.token);
 
             router.push('/products');

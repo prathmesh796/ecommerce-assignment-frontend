@@ -21,19 +21,22 @@ import {
 } from "@/components/ui/pagination"
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { useCart } from '@/context/CartContext';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [categories, setCategories] = useState(['Electronics', 'Fashion', 'Home Appliances', 'Home Office']); 
+    const [categories, setCategories] = useState(['Electronics', 'Fashion', 'Home Appliances', 'Home Office']);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState(''); 
+    const [maxPrice, setMaxPrice] = useState('');
+
+    const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const res = await axios.get(`http://localhost:5000/api/products/products`, { params: { page, limit: 12, category: selectedCategory, minPrice, maxPrice  } });
+            const res = await axios.get(`http://localhost:5000/api/products/products`, { params: { page, limit: 12, category: selectedCategory, minPrice, maxPrice } });
             setProducts(res.data.products);
             setTotalPages(res.data.totalPages);
         };
@@ -47,7 +50,7 @@ const Products = () => {
 
                 <div className="m-4">
                     <label htmlFor="category" className="mr-2">Filter by Category:</label>
-                    <select 
+                    <select
                         id="category"
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
@@ -62,20 +65,20 @@ const Products = () => {
 
                 <div className="m-4">
                     <label htmlFor="minPrice" className="mr-2">Min Price:</label>
-                    <input 
-                        type="number" 
-                        id="minPrice" 
-                        value={minPrice} 
-                        onChange={(e) => setMinPrice(e.target.value)} 
+                    <input
+                        type="number"
+                        id="minPrice"
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
                         className="border rounded p-2 mr-4"
                     />
-                    
+
                     <label htmlFor="maxPrice" className="mr-2">Max Price:</label>
-                    <input 
-                        type="number" 
-                        id="maxPrice" 
-                        value={maxPrice} 
-                        onChange={(e) => setMaxPrice(e.target.value)} 
+                    <input
+                        type="number"
+                        id="maxPrice"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
                         className="border rounded p-2"
                     />
                 </div>
@@ -99,7 +102,7 @@ const Products = () => {
                                     <p className='font-bold'>Rs. {product.price}</p>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button>Add to Cart</Button>
+                                    <Button onClick={() => addToCart(product)}>Add to Cart</Button>
                                 </CardFooter>
                             </Card>
                         </li>
@@ -114,17 +117,71 @@ const Products = () => {
                                 disabled={page === 1}
                             />
                         </PaginationItem>
-                        {[...Array(totalPages)].map((_, index) => (
-                            <PaginationItem key={index + 1}>
+
+                        {/* Render the first page */}
+                        {page > 2 && (
+                            <PaginationItem>
                                 <PaginationLink
                                     href="#"
-                                    onClick={() => setPage(index + 1)}
-                                    className={page === index + 1 ? 'font-bold bg-yellow-400' : ''} // Add a class based on active state
+                                    onClick={() => setPage(1)}
                                 >
-                                    {index + 1}
+                                    1
                                 </PaginationLink>
                             </PaginationItem>
-                        ))}
+                        )}
+
+                        {/* Render ellipsis if there are skipped pages */}
+                        {page > 3 && <PaginationEllipsis />}
+
+                        {/* Render previous page number */}
+                        {page > 1 && (
+                            <PaginationItem>
+                                <PaginationLink
+                                    href="#"
+                                    onClick={() => setPage(page - 1)}
+                                >
+                                    {page - 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )}
+
+                        {/* Render current page */}
+                        <PaginationItem>
+                            <PaginationLink
+                                href="#"
+                                className="font-bold bg-yellow-400"
+                            >
+                                {page}
+                            </PaginationLink>
+                        </PaginationItem>
+
+                        {/* Render next page number */}
+                        {page < totalPages && (
+                            <PaginationItem>
+                                <PaginationLink
+                                    href="#"
+                                    onClick={() => setPage(page + 1)}
+                                >
+                                    {page + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )}
+
+                        {/* Render ellipsis if there are skipped pages */}
+                        {page < totalPages - 2 && <PaginationEllipsis />}
+
+                        {/* Render the last page */}
+                        {page < totalPages - 1 && (
+                            <PaginationItem>
+                                <PaginationLink
+                                    href="#"
+                                    onClick={() => setPage(totalPages)}
+                                >
+                                    {totalPages}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )}
+
                         <PaginationItem>
                             <PaginationNext
                                 onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
