@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -17,18 +18,27 @@ const Login = () => {
             localStorage.setItem('token', res.data.token);
 
             router.push('/products');
-            
+
         } catch (error) {
             console.error('Login failed', error);
         }
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <input className='text-black' type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-            <input className='text-black' type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
+
+        <div className="flex flex-col min-h-[92vh]">
+            <main className='flex-grow flex items-center justify-center bg-gray-50'>
+                <div className='border border-black p-10 rounded-md w-50'>
+                    <h1 className='flex text-3xl font-bold pb-5 justify-center'>Login</h1>
+                    <form onSubmit={handleLogin} className="flex flex-col space-y-4">
+                        <input className='text-black p-2 border rounded' type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+                        <input className='text-black p-2 border rounded' type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+                        <Button type="submit">Login</Button>
+                    </form>
+                </div>
+
+            </main>
+        </div>
     );
 };
 
