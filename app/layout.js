@@ -1,31 +1,17 @@
-import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { CartProvider } from "@/context/CartContext";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 export const metadata = {
   title: "ShopEase",
-  description: "",
+  description: "Your go to ecommerce website store buy varity of products. Discover a world of amazing products at your fingertips. Start your shopping journey with us today!",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         <Navbar />
         <div className="mx-auto min-h-[92vh]">
           <CartProvider>

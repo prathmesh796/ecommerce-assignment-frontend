@@ -6,6 +6,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from '@/components/ui/button';
 import { NavigationEvents } from "@/components/navigation-events";
+import Image from "next/image";
 
 const Navbar = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -14,14 +15,13 @@ const Navbar = () => {
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Function to check if the user is logged in
   const checkLoginStatus = () => {
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // Set isLoggedIn based on the presence of the token
+    setIsLoggedIn(!!token);
   };
 
   useEffect(() => {
-    checkLoginStatus(); // Check login status on component mount
+    checkLoginStatus();
   }, []);
 
   const handleLogout = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   const handleUrlChange = () => {
-    checkLoginStatus(); // Check login status on URL change
+    checkLoginStatus();
   };
 
 
@@ -43,8 +43,10 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=100&h=100"
+                width={100}
+                height={100}
                 alt="E-commerce Logo"
                 className="h-8 w-auto"
                 onError={(e) => {

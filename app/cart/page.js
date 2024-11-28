@@ -3,12 +3,9 @@
 import { useCart } from '@/context/CartContext';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {
-    Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
-    CardTitle,
 } from "@/components/ui/card"
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';

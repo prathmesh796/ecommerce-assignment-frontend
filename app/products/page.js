@@ -5,7 +5,6 @@ import axios from 'axios';
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
 
@@ -22,6 +21,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import Head from 'next/head';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -45,6 +45,13 @@ const Products = () => {
 
     return (
         <div className="flex items-center justify-center min-h-[92vh]">
+            <Head>
+                <title>ShopEase - Our Products</title>
+                <meta name="description" content="A-to-Z products avaliable on our website store. Discover a world of amazing products at your fingertips. Start your shopping journey with us today!" />
+                <meta property="og:title" content="ShopEase - Our Products" />
+                <meta property="og:description" content="A-to-Z products avaliable on our website store. Discover a world of amazing products at your fingertips. Start your shopping journey with us today!" />
+                <meta property="og:image" content="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=100&h=100" />
+            </Head>
             <main className='w-full flex-col items-center justify-center bg-gray-50 min-h-[92vh] relative'>
                 <h1 className='flex justify-center items-center text-4xl font-bold m-4 pt-4'>Products</h1>
 
@@ -118,7 +125,6 @@ const Products = () => {
                             />
                         </PaginationItem>
 
-                        {/* Render the first page */}
                         {page > 2 && (
                             <PaginationItem>
                                 <PaginationLink
@@ -130,10 +136,8 @@ const Products = () => {
                             </PaginationItem>
                         )}
 
-                        {/* Render ellipsis if there are skipped pages */}
                         {page > 3 && <PaginationEllipsis />}
 
-                        {/* Render previous page number */}
                         {page > 1 && (
                             <PaginationItem>
                                 <PaginationLink
@@ -145,7 +149,6 @@ const Products = () => {
                             </PaginationItem>
                         )}
 
-                        {/* Render current page */}
                         <PaginationItem>
                             <PaginationLink
                                 href="#"
@@ -155,7 +158,6 @@ const Products = () => {
                             </PaginationLink>
                         </PaginationItem>
 
-                        {/* Render next page number */}
                         {page < totalPages && (
                             <PaginationItem>
                                 <PaginationLink
@@ -167,10 +169,8 @@ const Products = () => {
                             </PaginationItem>
                         )}
 
-                        {/* Render ellipsis if there are skipped pages */}
                         {page < totalPages - 2 && <PaginationEllipsis />}
 
-                        {/* Render the last page */}
                         {page < totalPages - 1 && (
                             <PaginationItem>
                                 <PaginationLink
