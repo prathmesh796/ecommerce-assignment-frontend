@@ -9,20 +9,34 @@ import {
 } from "@/components/ui/card"
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 const Cart = () => {
-    const { cart, removeFromCart } = useCart();
+    const { cart, removeFromCart, fetchCart, userId } = useCart();
+
+    useEffect(() => {
+        const loadCart = async () => {
+            if (userId) {
+                await fetchCart(userId);
+            }
+            else {
+                console.log("User  ID is null. Cannot fetch cart.");
+            }
+        };
+
+        loadCart();
+    }, [userId]);
 
     return (
         <div className="flex items-center justify-center min-h-[92vh]">
-            <main className='w-full flex flex-col items-center justify-center bg-gray-50 min-h-[92vh] relative'>
-                <h1 className='flex justify-center items-center text-4xl font-bold m-4 pt-4'>Cart</h1>
+            <main className='w-full flex flex-col items-center justify-center bg-gray-50 min-h-[92vh] relative p-4'>
+                <h1 className='text-4xl font-bold text-center mb-4'>Cart</h1>
                 {cart.items.length > 0 ? (
-                    <ul className='flex flex-col w-[60%]'>
+                    <ul className='flex flex-col w-full max-w-3xl'>
                         {cart.items.map(item => (
                             <li key={item.productId._id} className='p-4'>
-                                <div className='flex justify-between border-gray-500 border-2 rounded-md'>
-                                    <CardHeader>
+                                <div className='flex flex-col md:flex-row justify-between border-gray-500 border-2 rounded-md p-4'>
+                                    <CardHeader className="flex-shrink-0">
                                         <Image
                                             src={item.productId.imageURL}
                                             width={100}
@@ -32,16 +46,14 @@ const Cart = () => {
                                             alt={item.productId.name}
                                         />
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="flex-grow md:mx-4">
                                         <p className='font-bold'>{item.productId.name}</p>
-                                        <p>{item.productId.description}</p>
+                                        <p className='text-sm text-center'>{item.productId.description}</p>
                                     </CardContent>
-                                    <CardFooter>
-                                        <div className='flex flex-col justify-center items-center gap-5'>
-                                            <p className='font-bold'>Rs. {item.productId.price}</p>
-                                            <p className='font-bold'>Q. : {item.quantity}</p>
-                                            <Button className='w-20' onClick={() => removeFromCart(item.productId._id)}><RiDeleteBin6Line /></Button>
-                                        </div>
+                                    <CardFooter className="flex flex-col justify-center items-center md:flex-row md:gap-5">
+                                        <p className='font-bold'>Rs. {item.productId.price}</p>
+                                        <p className='font-bold'>Q. : {item.quantity}</p>
+                                        <Button className='w-20 mt-2 md:mt-0' onClick={() => removeFromCart(item.productId._id)}><RiDeleteBin6Line /></Button>
                                     </CardFooter>
 
                                 </div>

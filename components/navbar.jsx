@@ -11,6 +11,7 @@ import Image from "next/image";
 const Navbar = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -56,11 +57,18 @@ const Navbar = () => {
               <span className="ml-2 text-xl font-bold">ShopEase</span>
             </div>
 
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="/" className="text-gray-600 hover:text-yellow-600 transition-colors">Home</a>
-              <a href="/products" className="text-gray-600 hover:text-yellow-600 transition-colors">products</a>
-              <a href="/about" className="text-gray-600 hover:text-yellow-600 transition-colors">About Us</a>
-              <a href="/contact" className="text-gray-600 hover:text-yellow-600 transition-colors">Contact</a>
+            <div className="md:hidden">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-600 focus:outline-none">
+                {/* Icon for Hamburger Menu */}
+                {isMenuOpen ? '✖' : '☰'}
+              </button>
+            </div>
+
+            <div className={`md:flex items-center space-x-8 ${isMenuOpen ? 'flex flex-col justify-center items-center absolute bg-white w-full left-0 top-16 shadow-md' : 'hidden'} md:block`}>
+              <Link href="/" className="text-gray-600 hover:text-yellow-600 transition-colors py-2">Home</Link>
+              <Link href="/products" className="text-gray-600 hover:text-yellow-600 transition-colors py-2">Products</Link>
+              <Link href="/about" className="text-gray-600 hover:text-yellow-600 transition-colors py-2">About Us</Link>
+              <Link href="/contact" className="text-gray-600 hover:text-yellow-600 transition-colors py-2">Contact</Link>
             </div>
 
             <div className="flex items-center">

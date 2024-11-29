@@ -55,42 +55,48 @@ const Products = () => {
             <main className='w-full flex-col items-center justify-center bg-gray-50 min-h-[92vh] relative'>
                 <h1 className='flex justify-center items-center text-4xl font-bold m-4 pt-4'>Products</h1>
 
-                <div className="m-4">
-                    <label htmlFor="category" className="mr-2">Filter by Category:</label>
-                    <select
-                        id="category"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="border rounded p-2"
-                    >
-                        <option value="">All Categories</option>
-                        {categories.map(category => (
-                            <option key={category} value={category}>{category}</option>
-                        ))}
-                    </select>
+                <div className='flex flex-col md:flex-row justify-between p-2 px-10 mb-4'>
+                    <div className="m-4 flex-grow">
+                        <label htmlFor="category" className="mr-2">Filter by Category:</label>
+                        <select
+                            id="category"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="border rounded p-2"
+                        >
+                            <option value="">All Categories</option>
+                            {categories.map(category => (
+                                <option key={category} value={category}>{category}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="m-2 flex flex-col md:flex-row">
+                        <div className="flex-grow md:mr-2">
+                            <label htmlFor="minPrice" className="mr-2">Min Price:</label>
+                            <input
+                                type="number"
+                                id="minPrice"
+                                value={minPrice}
+                                onChange={(e) => setMinPrice(e.target.value)}
+                                className="border rounded p-2"
+                            />
+                        </div>
+
+                        <div className="flex-grow">
+                            <label htmlFor="maxPrice" className="mr-2">Max Price:</label>
+                            <input
+                                type="number"
+                                id="maxPrice"
+                                value ={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                                className="border rounded p-2"
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                <div className="m-4">
-                    <label htmlFor="minPrice" className="mr-2">Min Price:</label>
-                    <input
-                        type="number"
-                        id="minPrice"
-                        value={minPrice}
-                        onChange={(e) => setMinPrice(e.target.value)}
-                        className="border rounded p-2 mr-4"
-                    />
-
-                    <label htmlFor="maxPrice" className="mr-2">Max Price:</label>
-                    <input
-                        type="number"
-                        id="maxPrice"
-                        value={maxPrice}
-                        onChange={(e) => setMaxPrice(e.target.value)}
-                        className="border rounded p-2"
-                    />
-                </div>
-
-                <ul className='grid grid-cols-4 gap-4 px-60 py-5 mb-10'>
+                <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-10 mb-20'>
                     {products.map(product => (
                         <li key={product._id}>
                             <Card>
@@ -103,11 +109,11 @@ const Products = () => {
                                         style={{ height: "100px" }}
                                         alt={product.name}
                                         priority
-                                        
+
                                     />
                                 </CardHeader>
                                 <CardContent>
-                                    <p className='truncate text-ellipsis overflow-hidden w-44'>{product.name}</p>
+                                    <p className='truncate text-ellipsis overflow-hidden w-full text-center'>{product.name}</p>
                                     <p className='font-bold'>Rs. {product.price}</p>
                                 </CardContent>
                                 <CardFooter>
