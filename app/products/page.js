@@ -102,6 +102,8 @@ const Products = () => {
                                         sizes='100vw'
                                         style={{ height: "100px" }}
                                         alt={product.name}
+                                        priority
+                                        
                                     />
                                 </CardHeader>
                                 <CardContent>

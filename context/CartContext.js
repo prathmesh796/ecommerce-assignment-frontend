@@ -1,6 +1,5 @@
 "use client"
 
-// src/context/CartContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -12,7 +11,7 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState({ items: [] });
-    const [userId, setUserId] = useState(null); // Store user ID here
+    const [userId, setUserId] = useState(null);
     const [token, setToken] = useState(null);
 
     useEffect(() => {
@@ -26,6 +25,24 @@ export const CartProvider = ({ children }) => {
             setToken(storedToken);
         }
     }, []);
+
+    const fetchCart = async (currentUserId) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/cart/${currentUserId}`);
+            const cart = response.data;
+
+            if (!cart) {
+                console.error('Cart not found');
+                return; // or handle the case where the cart is not found
+            }
+
+            // Now it's safe to access cart.items
+            const items = cart.items || [];
+            setCart({ items: items }); // Assuming the response contains an array of items
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+        }
+    };
 
     const addToCart = async (product) => {
         if (!userId) {
@@ -62,7 +79,6 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-
     const removeFromCart = async (productId) => {
         if (!userId) {
             console.error('User  not logged in');
@@ -83,7 +99,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, setUserId, setToken }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, setUserId, setToken, fetchCart }}>
             {children}
         </CartContext.Provider>
     );

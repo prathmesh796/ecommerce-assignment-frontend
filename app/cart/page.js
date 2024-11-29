@@ -39,6 +39,7 @@ const Cart = () => {
                                     <CardFooter>
                                         <div className='flex flex-col justify-center items-center gap-5'>
                                             <p className='font-bold'>Rs. {item.productId.price}</p>
+                                            <p className='font-bold'>Q. : {item.quantity}</p>
                                             <Button className='w-20' onClick={() => removeFromCart(item.productId._id)}><RiDeleteBin6Line /></Button>
                                         </div>
                                     </CardFooter>

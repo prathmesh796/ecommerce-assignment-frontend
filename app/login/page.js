@@ -9,7 +9,7 @@ import { useCart } from '@/context/CartContext';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { setUserId, setToken } = useCart();
+    const { setUserId, setToken, fetchCart } = useCart();
 
     const router = useRouter();
 
@@ -23,6 +23,8 @@ const Login = () => {
 
             localStorage.setItem('userId', res.data.userId);
             localStorage.setItem('token', res.data.token);
+
+            fetchCart(res.data.userId);
 
             router.push('/products');
 
