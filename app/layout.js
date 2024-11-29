@@ -2,6 +2,7 @@ import "./globals.css";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { CartProvider } from "@/context/CartContext";
+import { Toaster } from 'sonner';
 
 export const metadata = {
   title: "ShopEase",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         <div className="mx-auto min-h-[92vh]">
           <CartProvider>
             {children}
+            <Toaster />
           </CartProvider>
         </div>
         <Footer />

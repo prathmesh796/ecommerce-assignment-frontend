@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import Head from 'next/head';
+import { toast } from 'sonner';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -88,7 +89,7 @@ const Products = () => {
                             <input
                                 type="number"
                                 id="maxPrice"
-                                value ={maxPrice}
+                                value={maxPrice}
                                 onChange={(e) => setMaxPrice(e.target.value)}
                                 className="border rounded p-2"
                             />
@@ -117,7 +118,10 @@ const Products = () => {
                                     <p className='font-bold'>Rs. {product.price}</p>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button onClick={() => addToCart(product)}>Add to Cart</Button>
+                                    <Button onClick={() => {
+                                        addToCart(product);
+                                        toast('Product added successfully.');
+                                    }}>Add to Cart</Button>
                                 </CardFooter>
                             </Card>
                         </li>

@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 const Cart = () => {
     const { cart, removeFromCart, fetchCart, userId } = useCart();
@@ -53,7 +54,9 @@ const Cart = () => {
                                     <CardFooter className="flex flex-col justify-center items-center md:flex-row md:gap-5">
                                         <p className='font-bold'>Rs. {item.productId.price}</p>
                                         <p className='font-bold'>Q. : {item.quantity}</p>
-                                        <Button className='w-20 mt-2 md:mt-0' onClick={() => removeFromCart(item.productId._id)}><RiDeleteBin6Line /></Button>
+                                        <Button className='w-20 mt-2 md:mt-0' onClick={() => {removeFromCart(item.productId._id);
+                                            toast('Product deleted from cart.')
+                                        }}><RiDeleteBin6Line /></Button>
                                     </CardFooter>
 
                                 </div>

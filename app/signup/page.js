@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -27,8 +28,10 @@ const Signup = () => {
             });
     
             if (response.status === 201) {
+                toast('New user Created')
                 router.push('/login');
             } else if (response.status === 400) {
+                toast('User already exists')
                 setError('User already exists');
             }
         } catch (error) {
