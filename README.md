@@ -27,8 +27,8 @@ This is the frontend of the E-commerce website built with Next.js and React. It 
 
 1. **Clone the repository**:
    ```bash
-   cd e-commerce-frontend
    git clone https://github.com/prathmesh796/ecommerce-assignment-frontend.git
+   cd e-commerce-frontend
 
 2. **Install dependencies:**
     ```bash
